@@ -15,27 +15,27 @@ from copy import deepcopy
 
 def main():
     # Read Video
-    input_video_path = r"Forward_Op\tennis_cv\input_videos\input_video.mp4"
+    input_video_path = r"C:\Users\tennis_cv\input_videos\input_video.mp4"
     video_frames = read_video(input_video_path)
 
 
     # Detect Players and Ball
-    player_tracker = PlayerTracker(model_path = 'Forward_Op/tennis_cv/models/yolov8x')
-    ball_tracker = BallTracker(model_path= 'Forward_Op/tennis_cv/models/last.pt')
+    player_tracker = PlayerTracker(model_path = 'C:/Users/tennis_cv/models/yolov8x')
+    ball_tracker = BallTracker(model_path= 'C:/Users/tennis_cv/models/last.pt')
 
 
     player_detections = player_tracker.detect_frames(video_frames,
                                                      read_from_stub=False,
-                                                     stub_path="Forward_Op/tennis_cv/tracker_stubs/player_detections.pkl")
+                                                     stub_path="C:/Users/tennis_cv/tracker_stubs/player_detections.pkl")
 
     ball_detections = ball_tracker.detect_frames(video_frames,
                                                      read_from_stub=False,
-                                                     stub_path="Forward_Op/tennis_cv/tracker_stubs/ball_detections.pkl")
+                                                     stub_path="C:/Users/tennis_cv/tracker_stubs/ball_detections.pkl")
 
     ball_detections = ball_tracker.interpolate_ball_positions(ball_detections)
 
     # Court Line Detector model
-    court_model_path = "C:/Users/cutle/Forward_Op/tennis_cv/models/keypoints_model.pt"
+    court_model_path = "C:/Users/tennis_cv/models/keypoints_model.pt"
     court_line_detector = CourtLineDetector(court_model_path)
     court_keypoints = court_line_detector.predict(video_frames[0])
 
@@ -146,7 +146,7 @@ def main():
         cv2.putText(frame, f"Frame: {i}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2)
 
     # Save Video
-    save_video(output_video_frames, "/Forward_Op/tennis_cv/output_videos/output_video.avi")
+    save_video(output_video_frames, "C:/Users/tennis_cv/output_videos/output_video.avi")
 
 if __name__ == "__main__":
     main()
